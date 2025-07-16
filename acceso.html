@@ -57,49 +57,49 @@
         </section>
 
         <!-- Modal de Registro Optimizado en 3 Columnas -->
-    <div id="register-modal" class="fixed inset-0 bg-black/50 flex items-center justify-center hidden animate__animated animate__fadeIn animate__delay-0.2s">
-        <div class="bg-white p-10 rounded-xl shadow-lg w-[80%] max-w-[1500px] max-h-[90vh] overflow-y-auto">
-            <h3 class="text-3xl font-bold text-gray-800 mb-8 text-center">Regístrate</h3>
-            <form id="register-form" class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <div>
-                    <label for="register-name" class="block text-gray-700 font-semibold mb-2">Nombre y Apellidos</label>
-                    <input type="text" id="register-name" name="register-name" required class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Ej. Juan Pérez">
-                </div>
-                <div>
-                    <label for="register-dni" class="block text-gray-700 font-semibold mb-2">DNI</label>
-                    <input type="text" id="register-dni" name="register-dni" required pattern="\d{8}" class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="12345678">
-                </div>
-                <div>
-                    <label for="register-sex" class="block text-gray-700 font-semibold mb-2">Sexo</label>
-                    <select id="register-sex" name="register-sex" required class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        <option value="" disabled selected>Selecciona una opción</option>
-                        <option value="Masculino">Masculino</option>
-                        <option value="Femenino">Femenino</option>
-                    </select>
-                </div>
-                <div>
-                    <label for="register-birthdate" class="block text-gray-700 font-semibold mb-2">Fecha de Nacimiento</label>
-                    <input type="date" id="register-birthdate" name="register-birthdate" required class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                </div>
-                <div>
-                    <label for="register-email" class="block text-gray-700 font-semibold mb-2">Correo Electrónico</label>
-                    <input type="email" id="register-email" name="register-email" required class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="tu@correo.com">
-                </div>
-                <div>
-                    <label for="register-password" class="block text-gray-700 font-semibold mb-2">Contraseña</label>
-                    <input type="password" id="register-password" name="register-password" required class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="••••••••">
-                </div>
-                <div>
-                    <label for="confirm-password" class="block text-gray-700 font-semibold mb-2">Confirmar Contraseña</label>
-                    <input type="password" id="confirm-password" name="confirm-password" required class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="••••••••">
-                </div>
-                <div class="lg:col-span-3 flex flex-col gap-4">
-                    <button type="submit" class="bg-blue-600 text-white px-6 py-3 rounded-full font-semibold w-full hover:bg-blue-700 transition duration-300 shadow-lg">Registrarse</button>
-                    <button type="button" id="close-register-modal" class="text-gray-600 hover:text-gray-800 text-center">Cancelar</button>
-                </div>
-            </form>
+        <div id="register-modal" class="fixed inset-0 bg-black/50 flex items-center justify-center hidden animate__animated animate__fadeIn animate__delay-0.2s">
+            <div class="bg-white p-10 rounded-xl shadow-lg w-[80%] max-w-[1500px] max-h-[90vh] overflow-y-auto">
+                <h3 class="text-3xl font-bold text-gray-800 mb-8 text-center">Regístrate</h3>
+                <form id="register-form" class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div>
+                        <label for="register-name" class="block text-gray-700 font-semibold mb-2">Nombre y Apellidos</label>
+                        <input type="text" id="register-name" name="register-name" required class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Ej. Juan Pérez">
+                    </div>
+                    <div>
+                        <label for="register-dni" class="block text-gray-700 font-semibold mb-2">DNI</label>
+                        <input type="text" id="register-dni" name="register-dni" required pattern="\d{8}" class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="12345678">
+                    </div>
+                    <div>
+                        <label for="register-sex" class="block text-gray-700 font-semibold mb-2">Sexo</label>
+                        <select id="register-sex" name="register-sex" required class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option value="" disabled selected>Selecciona una opción</option>
+                            <option value="Masculino">Masculino</option>
+                            <option value="Femenino">Femenino</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="register-birthdate" class="block text-gray-700 font-semibold mb-2">Fecha de Nacimiento</label>
+                        <input type="date" id="register-birthdate" name="register-birthdate" required class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div>
+                        <label for="register-email" class="block text-gray-700 font-semibold mb-2">Correo Electrónico</label>
+                        <input type="email" id="register-email" name="register-email" required class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="tu@correo.com">
+                    </div>
+                    <div>
+                        <label for="register-password" class="block text-gray-700 font-semibold mb-2">Contraseña</label>
+                        <input type="password" id="register-password" name="register-password" required class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="••••••••">
+                    </div>
+                    <div>
+                        <label for="confirm-password" class="block text-gray-700 font-semibold mb-2">Confirmar Contraseña</label>
+                        <input type="password" id="confirm-password" name="confirm-password" required class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="••••••••">
+                    </div>
+                    <div class="lg:col-span-3 flex flex-col gap-4">
+                        <button type="submit" class="bg-blue-600 text-white px-6 py-3 rounded-full font-semibold w-full hover:bg-blue-700 transition duration-300 shadow-lg">Registrarse</button>
+                        <button type="button" id="close-register-modal" class="text-gray-600 hover:text-gray-800 text-center">Cancelar</button>
+                    </div>
+                </form>
+            </div>
         </div>
-    </div>
 
 
 
@@ -107,23 +107,6 @@
         <div id="toast" class="fixed top-6 right-6 p-4 rounded-lg shadow-lg hidden animate__animated animate__fadeIn animate__delay-0.4s">
             <p id="toast-message"></p>
         </div>
-
-        <!-- Chatbot -->
-        <div id="chatbot" class="fixed bottom-6 right-6 bg-white rounded-xl shadow-2xl w-96 hidden animate__animated animate__fadeInUp animate__delay-0.6s">
-            <div class="bg-blue-700 text-white p-4 rounded-t-xl flex justify-between items-center">
-                <div class="flex items-center space-x-2">
-                    <i class="fas fa-robot"></i>
-                    <h3 class="font-semibold">Asistente Virtual</h3>
-                </div>
-                <button id="closeChatbot" class="text-white hover:text-gray-200"><i class="fas fa-times"></i></button>
-            </div>
-            <div id="chatbotMessages" class="p-4 h-80 overflow-y-auto bg-gray-50"></div>
-            <div class="p-4 border-t bg-white">
-                <input id="chatbotInput" type="text" placeholder="Escribe tu mensaje..." class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                <button id="sendChatbot" class="bg-blue-600 text-white px-4 py-2 mt-2 rounded-lg w-full hover:bg-blue-700 transition duration-300">Enviar</button>
-            </div>
-        </div>
-        <button id="openChatbot" class="fixed bottom-6 right-6 bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 transition duration-300"><i class="fas fa-comment text-xl"></i></button>
     </main>
 
     <!-- Footer -->
@@ -159,7 +142,17 @@
     </footer>
 
     <script src="js/toast.js"></script>
-    <script src="js/chatbot.js"></script>
+    <!-- Start of ChatBot (www.chatbot.com) code -->
+    <script>
+        window.__ow = window.__ow || {};
+        window.__ow.organizationId = "1f645d8f-427a-4708-ab6d-f040fd6bc89c";
+        window.__ow.template_id = "987e110c-2f03-4c7a-8b5f-3a1c50ae4671";
+        window.__ow.integration_name = "manual_settings";
+        window.__ow.product_name = "chatbot";   
+        ;(function(n,t,c){function i(n){return e._h?e._h.apply(null,n):e._q.push(n)}var e={_q:[],_h:null,_v:"2.0",on:function(){i(["on",c.call(arguments)])},once:function(){i(["once",c.call(arguments)])},off:function(){i(["off",c.call(arguments)])},get:function(){if(!e._h)throw new Error("[OpenWidget] You can't use getters before load.");return i(["get",c.call(arguments)])},call:function(){i(["call",c.call(arguments)])},init:function(){var n=t.createElement("script");n.async=!0,n.type="text/javascript",n.src="https://cdn.openwidget.com/openwidget.js",t.head.appendChild(n)}};!n.__ow.asyncInit&&e.init(),n.OpenWidget=n.OpenWidget||e}(window,document,[].slice))
+    </script>
+    <noscript>You need to <a href="https://www.chatbot.com/help/chat-widget/enable-javascript-in-your-browser/" rel="noopener nofollow">enable JavaScript</a> in order to use the AI chatbot tool powered by <a href="https://www.chatbot.com/" rel="noopener nofollow" target="_blank">ChatBot</a></noscript>
+    <!-- End of ChatBot code -->
     <script src="js/acceso.js"></script>
 </body>
 </html>
