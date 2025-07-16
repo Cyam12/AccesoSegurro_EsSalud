@@ -198,3 +198,42 @@ footer a {
         margin-top: 0.5rem;
     }
 }
+
+/* En celulares responsivo*/
+@media (max-width: 768px) {
+    /* Modal más compacto */
+    #register-modal > div {
+        padding: 1rem !important;
+        width: 95% !important;
+    }
+
+    /* Título más pequeño */
+    #register-modal h3 {
+        font-size: 1.25rem !important;
+        margin-bottom: 1rem !important;
+    }
+
+    /* Formulario en 2 columnas incluso en celulares */
+    #register-form {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 0.75rem !important;
+    }
+
+    /* Inputs y selects más compactos */
+    #register-form input,
+    #register-form select {
+        font-size: 0.9rem !important;
+        padding: 0.5rem !important;
+    }
+
+    /* Botones más compactos */
+    #register-form button {
+        font-size: 1rem !important;
+        padding: 0.75rem !important;
+    }
+
+    /* Última fila (botones) ocupa las dos columnas */
+    #register-form > div.lg\:col-span-3 {
+        grid-column: span 2 / span 2 !important;
+    }
+}
