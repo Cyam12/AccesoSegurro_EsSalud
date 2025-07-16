@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acceso Salud - Inicio</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="icon" href="https://static.vecteezy.com/system/resources/thumbnails/017/177/954/small_2x/round-medical-cross-symbol-on-transparent-background-free-png.png" type="image/x-icon">
+    <link rel="stylesheet" href="css/index.css">
+</head>
+<body class="bg-gray-50 font-sans">
+    <!-- Loader -->
+    <div id="loader" class="fixed inset-0 bg-white flex items-center justify-center z-60">
+        <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-600"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-blue-800 to-blue-600 text-white p-6 shadow-xl sticky top-0 z-50 animate__animated animate__fadeInDown">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-4">
+                <img src="https://static.vecteezy.com/system/resources/thumbnails/017/177/954/small_2x/round-medical-cross-symbol-on-transparent-background-free-png.png" alt="Logo Acceso Salud" class="w-12 h-12">
+                <h1 class="text-4xl font-extrabold tracking-tight">Acceso Salud</h1>
+            </div>
+            <nav class="flex items-center space-x-8">
+                <a href="index.html" class="text-lg hover:text-blue-200 transition duration-300">Inicio</a>
+                <a href="conocenos.html" class="text-lg hover:text-blue-200 transition duration-300">Conócenos</a>
+                <a href="contactanos.html" class="text-lg hover:text-blue-200 transition duration-300">Contáctanos</a>
+                <a href="acceso.html" class="bg-white text-blue-800 px-6 py-3 rounded-full font-semibold hover:bg-blue-100 transition duration-300 shadow-md">Iniciar Sesión</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <main class="py-0">
+        <section class="relative text-center animate__animated animate__fadeIn bg-cover bg-center py-16" style="background-image: url('img/head.jpg')">
+            <div class="absolute inset-0 bg-black/70"></div>
+            <div class="relative z-10 flex flex-col items-center justify-center h-full px-4">
+                <h2 class="text-6xl font-extrabold text-white mb-6 drop-shadow-lg">Sistema de Citas Médicas</h2>
+                <p class="text-2xl text-white mb-10 max-w-3xl mx-auto drop-shadow-md">Accede a los servicios de salud del Estado Peruano de manera rápida, segura y eficiente.</p>
+                <div class="flex justify-center space-x-6">
+                    <a href="acceso.html" class="bg-blue-600 text-white px-10 py-4 rounded-full font-semibold text-lg hover:bg-blue-700 transition duration-300 shadow-lg animate__animated animate__pulse animate__infinite">Empezar Ahora</a>
+                    <a href="conocenos.html" class="bg-white text-blue-800 px-10 py-4 rounded-full font-semibold text-lg hover:bg-gray-100 transition duration-300 shadow-lg">Conócenos</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="container mx-auto mt-12 grid grid-cols-1 md:grid-cols-3 gap-10 animate__animated animate__fadeInUp">
+            <div class="bg-white p-10 rounded-2xl shadow-xl text-center transform hover:scale-105 transition duration-300 feature-card">
+                <img src="https://img.freepik.com/vector-gratis/reserva-citas-telefono-inteligente_23-2148554313.jpg" alt="Reservar Citas" class="mx-auto mb-6 h-24 rounded-md">
+                <h3 class="text-2xl font-bold text-gray-800 mb-3">Reservar Citas</h3>
+                <p class="text-gray-600">Programa citas médicas en pocos pasos, con opciones presenciales o teleconsulta.</p>
+            </div>
+            <div class="bg-white p-10 rounded-2xl shadow-xl text-center transform hover:scale-105 transition duration-300 feature-card animate__delay-0.2s">
+                <img src="https://images.ecestaticos.com/ciN9hN7qsu5JOcrGdMngWhCHs8Y=/0x70:1716x1040/1200x1200/filters:fill(white):format(jpg)/f.elconfidencial.com%2Foriginal%2F8db%2F8b6%2Faa5%2F8db8b6aa54b585253e15f79a68447aeb.jpg" alt="Resultados Médicos" class="mx-auto mb-6 h-24 rounded-md">
+                <h3 class="text-2xl font-bold text-gray-800 mb-3">Resultados Médicos</h3>
+                <p class="text-gray-600">Consulta tus resultados médicos en cualquier momento desde nuestra plataforma.</p>
+            </div>
+            <div class="bg-white p-10 rounded-2xl shadow-xl text-center transform hover:scale-105 transition duration-300 feature-card animate__delay-0.4s">
+                <img src="https://veigler.com/wp-content/uploads/2020/01/centro-medico-e1620819797482.jpg" alt="Centros de Salud" class="mx-auto mb-6 h-24 rounded-md">
+                <h3 class="text-2xl font-bold text-gray-800 mb-3">Centros de Salud</h3>
+                <p class="text-gray-600">Encuentra centros de salud cercanos con información detallada.</p>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section class="container mx-auto mt-12 py-10 bg-gradient-to-r from-blue-50 to-blue-100 rounded-2xl animate__animated animate__fadeIn animate__delay-0.6s">
+            <div class="text-center">
+                <h2 class="text-4xl font-bold text-gray-800 mb-8">Lo que dicen nuestros usuarios</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-white p-8 rounded-xl shadow-lg testimonial-card">
+                        <img src="https://randomuser.me/api/portraits/women/40.jpg" alt="Usuario 1" class="mx-auto mb-4 h-16 rounded-full">
+                        <p class="text-gray-600 italic">"Acceso Salud me facilitó agendar mis citas en minutos. ¡Es súper práctico!"</p>
+                        <p class="mt-4 font-semibold text-gray-800">María López</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-xl shadow-lg testimonial-card">
+                        <img src="https://randomuser.me/api/portraits/men/44.jpg" alt="Usuario 2" class="mx-auto mb-4 h-16 rounded-full">
+                        <p class="text-gray-600 italic">"Pude consultar mis resultados médicos desde casa, sin complicaciones."</p>
+                        <p class="mt-4 font-semibold text-gray-800">Juan Pérez</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-xl shadow-lg testimonial-card">
+                        <img src="https://randomuser.me/api/portraits/women/30.jpg" alt="Usuario 3" class="mx-auto mb-4 h-16 rounded-full">
+                        <p class="text-gray-600 italic">"El soporte es excelente, siempre responden rápido por WhatsApp."</p>
+                        <p class="mt-4 font-semibold text-gray-800">Ana Gómez</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Statistics Section -->
+        <section class="container mx-auto mt-12 py-10 text-center animate__animated animate__fadeIn animate__delay-0.8s">
+            <h2 class="text-4xl font-bold text-gray-800 mb-8">Nuestro impacto</h2>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="p-6">
+                    <p class="text-5xl font-bold text-blue-600 mb-2">+50K</p>
+                    <p class="text-gray-600">Citas agendadas</p>
+                </div>
+                <div class="p-6">
+                    <p class="text-5xl font-bold text-blue-600 mb-2">+200</p>
+                    <p class="text-gray-600">Centros de salud</p>
+                </div>
+                <div class="p-6">
+                    <p class="text-5xl font-bold text-blue-600 mb-2">24/7</p>
+                    <p class="text-gray-600">Soporte disponible</p>
+                </div>
+                <div class="p-6">
+                    <p class="text-5xl font-bold text-blue-600 mb-2">+1M</p>
+                    <p class="text-gray-600">Usuarios registrados</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action Section -->
+        <section class="mt-12 py-10 bg-blue-600 text-white text-center rounded-none animate__animated animate__fadeIn animate__delay-1s">
+            <h2 class="text-4xl font-bold mb-6">Únete a Acceso Salud hoy</h2>
+            <p class="text-xl mb-8 max-w-2xl mx-auto">Regístrate ahora y comienza a gestionar tus citas médicas de manera sencilla.</p>
+            <a href="acceso.html" class="bg-white text-blue-800 px-10 py-4 rounded-full font-semibold text-lg hover:bg-gray-100 transition duration-300 shadow-lg">Regístrate Ahora</a>
+        </section>
+    </main>
+
+    <!-- Chatbot -->
+    <div id="chatbot" class="fixed bottom-6 right-6 bg-white rounded-xl shadow-2xl w-96 hidden animate__animated animate__fadeInUp animate__delay-1.2s">
+        <div class="bg-blue-700 text-white p-4 rounded-t-xl flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-robot"></i>
+                <h3 class="font-semibold">Asistente Virtual</h3>
+            </div>
+            <button id="closeChatbot" class="text-white hover:text-gray-200"><i class="fas fa-times"></i></button>
+        </div>
+        <div id="chatbotMessages" class="p-4 h-80 overflow-y-auto bg-gray-50"></div>
+        <div class="p-4 border-t bg-white">
+            <input id="chatbotInput" type="text" placeholder="Escribe tu mensaje..." class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <button id="sendChatbot" class="bg-blue-600 text-white px-4 py-2 mt-2 rounded-lg w-full hover:bg-blue-700 transition duration-300">Enviar</button>
+        </div>
+    </div>
+    <button id="openChatbot" class="fixed bottom-6 right-6 bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 transition duration-300"><i class="fas fa-comment text-xl"></i></button>
+
+    <!-- Notification -->
+    <div id="notification" class="fixed top-6 right-6 bg-green-500 text-white p-4 rounded-lg shadow-lg hidden animate__animated animate__fadeIn animate__delay-1.2s">
+        <p id="notificationMessage"></p>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white p-10 ">
+        <div class="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
+            <div>
+                <h3 class="text-xl font-semibold mb-4">Acceso Salud</h3>
+                <p class="text-gray-400">Tu portal para acceder a los servicios de salud del Estado Peruano con facilidad y confianza.</p>
+            </div>
+            <div>
+                <h3 class="text-xl font-semibold mb-4">Enlaces Rápidos</h3>
+                <ul class="space-y-3">
+                    <li><a href="conocenos.html" class="text-gray-400 hover:text-white transition duration-300">Conócenos</a></li>
+                    <li><a href="contactanos.html" class="text-gray-400 hover:text-white transition duration-300">Contáctanos</a></li>
+                    <li><a href="acceso.html" class="text-gray-400 hover:text-white transition duration-300">Iniciar Sesión</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-xl font-semibold mb-4">Contacto</h3>
+                <p class="text-gray-400 mb-2">📞 <a href="tel:+51113" class="hover:text-white transition duration-300">Línea de Ayuda: 113</a></p>
+                <p class="text-gray-400">💬 <a href="https://api.whatsapp.com/send?phone=+51992637770&text=Hola%20*Tengo%20la%20siguiente%20duda...*" class="hover:text-white transition duration-300">WhatsApp</a></p>
+            </div>
+            <div>
+                <h3 class="text-xl font-semibold mb-4">Síguenos</h3>
+                <div class="flex space-x-4">
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300"><i class="fab fa-facebook-f text-2xl"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300"><i class="fab fa-twitter text-2xl"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300"><i class="fab fa-instagram text-2xl"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-8 text-gray-400">© 2025 Acceso Salud. Todos los derechos reservados.</div>
+    </footer>
+
+    <script src="js/chatbot.js"></script>
+    <script src="js/index.js"></script>
+</body>
+</html>

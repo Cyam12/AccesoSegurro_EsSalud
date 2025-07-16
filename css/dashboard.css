@@ -1,0 +1,182 @@
+body {
+    font-family: 'Inter', sans-serif;
+    min-height: 90vh;
+    display: flex;
+    flex-direction: row;
+}
+
+#loader {
+    transition: opacity 0.5s ease;
+    z-index: 70;
+}
+
+#loader.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+aside {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 16rem;
+    padding: 1.5rem;
+    background: linear-gradient(to bottom, #3b82f6, #1e40af);
+    color: white;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
+    z-index: 60;
+    animation-duration: 0.5s;
+}
+
+aside button {
+    width: 100%;
+    text-align: left;
+    border-radius: 0.5rem;
+    padding: 0.75rem;
+}
+
+aside button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateX(5px);
+    transition: all 0.3s ease;
+}
+
+main {
+    margin-left: 16rem;
+    flex: 1;
+    padding: 1.5rem;
+}
+
+#panel-principal-section, #mis-citas-section, #reservar-cita-section, #resultados-medicos-section, #centros-salud-section, #historial-section, #soporte-section, #perfil-section, #configuraciones-section {
+    transition: all 0.3s ease;
+    opacity: 0;
+}
+
+#panel-principal-section.active, #mis-citas-section.active, #reservar-cita-section.active, #resultados-medicos-section.active, #centros-salud-section.active, #historial-section.active, #soporte-section.active, #perfil-section.active, #configuraciones-section.active {
+    opacity: 1;
+}
+
+#details-modal, #reprogram-modal, #new-appointment-modal, #filter-modal, #cancel-modal, #confirm-reserve-modal, #new-result-modal, #filter-results-modal, #result-detail-modal, #map-modal, #filter-history-modal, #callback-modal, #change-password-modal, #2fa-modal, #edit-profile-full-modal, #confirm-settings-modal {
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: scale(0.9);
+}
+
+#details-modal.active, #reprogram-modal.active, #new-appointment-modal.active, #filter-modal.active, #cancel-modal.active, #confirm-reserve-modal.active, #new-result-modal.active, #filter-results-modal.active, #result-detail-modal.active, #map-modal.active, #filter-history-modal.active, #callback-modal.active, #change-password-modal.active, #2fa-modal.active, #edit-profile-full-modal.active, #confirm-settings-modal.active {
+    opacity: 1;
+    transform: scale(1);
+}
+
+#toast {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    max-width: 320px;
+    padding: 1rem 1.25rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    opacity: 0.95;
+    transition: all 0.4s ease;
+    transform: translateY(-10px);
+    z-index: 100;
+}
+
+#toast.hidden {
+    opacity: 0;
+    transform: translateY(-20px);
+    pointer-events: none;
+}
+
+#toast i {
+    font-size: 1.75rem;
+}
+
+#toast p {
+    font-size: 1.1rem;
+    font-weight: 600;
+    flex-grow: 1;
+}
+
+#toast.bg-green-500 {
+    background-color: #22c55e;
+    color: white;
+}
+
+#toast.bg-red-500 {
+    background-color: #ef4444;
+    color: white;
+}
+
+#toast.bg-yellow-500 {
+    background-color: #eab308;
+    color: black;
+}
+
+details summary {
+    cursor: pointer;
+    padding: 0.5rem;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+details[open] summary {
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+details[open] p {
+    padding: 0.5rem 0;
+}
+
+.animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+@media (max-width: 768px) {
+    aside {
+        width: 14rem;
+        padding: 1rem;
+    }
+
+    main {
+        margin-left: 14rem;
+    }
+
+    #panel-principal-section, #mis-citas-section, #reservar-cita-section, #resultados-medicos-section, #centros-salud-section, #historial-section, #soporte-section, #perfil-section, #configuraciones-section {
+        padding: 1rem;
+    }
+
+    #toast {
+        max-width: 90%;
+        right: 1rem;
+        padding: 0.75rem 1rem;
+    }
+
+    #toast i {
+        font-size: 1.5rem;
+    }
+
+    #toast p {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 640px) {
+    aside {
+        width: 12rem;
+        padding: 0.75rem;
+    }
+
+    main {
+        margin-left: 12rem;
+    }
+
+    #panel-principal-section, #mis-citas-section, #reservar-cita-section, #resultados-medicos-section, #centros-salud-section, #historial-section, #soporte-section, #perfil-section, #configuraciones-section {
+        padding: 0.75rem;
+    }
+}

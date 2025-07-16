@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acceso Salud - Conócenos</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="icon" href="https://static.vecteezy.com/system/resources/thumbnails/017/177/954/small_2x/round-medical-cross-symbol-on-transparent-background-free-png.png" type="image/x-icon">
+    <link rel="stylesheet" href="css/conocenos.css">
+</head>
+<body class="bg-gray-50 font-sans">
+    <!-- Loader -->
+    <div id="loader" class="fixed inset-0 bg-white flex items-center justify-center z-60">
+        <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-600"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-blue-800 to-blue-600 text-white p-6 shadow-xl sticky top-0 z-50 animate__animated animate__fadeInDown">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-4">
+                <img src="https://static.vecteezy.com/system/resources/thumbnails/017/177/954/small_2x/round-medical-cross-symbol-on-transparent-background-free-png.png" alt="Logo Acceso Salud" class="w-12 h-12">
+                <h1 class="text-4xl font-extrabold tracking-tight">Acceso Salud</h1>
+            </div>
+            <nav class="flex items-center space-x-8">
+                <a href="index.html" class="text-lg hover:text-blue-200 transition duration-300">Inicio</a>
+                <a href="conocenos.html" class="text-lg hover:text-blue-200 transition duration-300">Conócenos</a>
+                <a href="contactanos.html" class="text-lg hover:text-blue-200 transition duration-300">Contáctanos</a>
+                <a href="acceso.html" class="bg-white text-blue-800 px-6 py-3 rounded-full font-semibold hover:bg-blue-100 transition duration-300 shadow-md">Iniciar Sesión</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <main class="py-0">
+        <section class="relative text-center animate__animated animate__fadeIn bg-cover bg-center py-20" style="background-image: url('img/conocenos.jpg');">
+            <div class="absolute inset-0 bg-black/70"></div>
+            <div class="relative z-10 flex flex-col items-center justify-center h-full px-4">
+                <h2 class="text-6xl font-extrabold text-white mb-6 drop-shadow-lg">Conócenos</h2>
+                <p class="text-2xl text-white mb-10 max-w-3xl mx-auto drop-shadow-md">Descubre quiénes somos, nuestra misión y cómo trabajamos para mejorar el acceso a la salud en el Perú.</p>
+                <a href="acceso.html" class="bg-blue-600 text-white px-10 py-4 rounded-full font-semibold text-lg hover:bg-blue-700 transition duration-300 shadow-lg animate__animated animate__pulse animate__infinite">Únete Ahora</a>
+            </div>
+        </section>
+
+        <!-- Nuestra Misión -->
+        <section class="container mx-auto mt-12 py-10 animate__animated animate__fadeInUp">
+            <div class="flex flex-col md:flex-row items-center gap-10">
+                <div class="md:w-1/2">
+                    <h2 class="text-4xl font-bold text-gray-800 mb-6">Nuestra Misión</h2>
+                    <p class="text-gray-600 text-lg">En Acceso Salud, nuestra misión es facilitar el acceso a servicios de salud de calidad para todos los peruanos, integrando tecnología y atención personalizada para agilizar citas médicas, resultados y soporte.</p>
+                </div>
+                <div class="md:w-1/2">
+                    <img src="img/vision.webp" alt="Nuestra Misión" class="w-full h-64 object-cover rounded-2xl shadow-lg">
+                </div>
+            </div>
+        </section>
+
+        <!-- Nuestro Equipo -->
+        <section class="container mx-auto mt-12 py-10 bg-gradient-to-r from-blue-50 to-blue-100 rounded-2xl animate__animated animate__fadeInUp animate__delay-0.2s">
+            <h2 class="text-4xl font-bold text-gray-800 mb-8 text-center">Nuestro Equipo</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white p-8 rounded-xl shadow-lg team-card">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Equipo 1" class="mx-auto mb-4 h-16 rounded-full">
+                    <h3 class="text-xl font-semibold text-gray-800">Dr. Carlos Ramírez</h3>
+                    <p class="text-gray-600 italic">Director Médico</p>
+                    <p class="text-gray-600 mt-2">Lidera la coordinación con centros de salud para garantizar la calidad del servicio.</p>
+                </div>
+                <div class="bg-white p-8 rounded-xl shadow-lg team-card animate__delay-0.4s">
+                    <img src="https://randomuser.me/api/portraits/women/45.jpg" alt="Equipo 2" class="mx-auto mb-4 h-16 rounded-full">
+                    <h3 class="text-xl font-semibold text-gray-800">Ing. Laura Fernández</h3>
+                    <p class="text-gray-600 italic">Jefa de Tecnología</p>
+                    <p class="text-gray-600 mt-2">Dirige el desarrollo de la plataforma para una experiencia digital fluida.</p>
+                </div>
+                <div class="bg-white p-8 rounded-xl shadow-lg team-card animate__delay-0.6s">
+                    <img src="https://randomuser.me/api/portraits/women/70.jpg" alt="Equipo 3" class="mx-auto mb-4 h-16 rounded-full">
+                    <h3 class="text-xl font-semibold text-gray-800">Lic. Sofía Vargas</h3>
+                    <p class="text-gray-600 italic">Coordinadora de Soporte</p>
+                    <p class="text-gray-600 mt-2">Asegura que cada usuario reciba atención rápida y personalizada.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Nuestra Historia -->
+        <section class="container mx-auto mt-12 py-10 animate__animated animate__fadeIn animate__delay-0.8s">
+            <div class="flex flex-col md:flex-row items-center gap-10">
+                <div class="md:w-1/2 order-2 md:order-1">
+                    <img src="img/historia.jpg" alt="Nuestra Historia" class="w-full h-64 object-cover rounded-2xl shadow-lg">
+                </div>
+                <div class="md:w-1/2 order-1 md:order-2">
+                    <h2 class="text-4xl font-bold text-gray-800 mb-6">Nuestra Historia</h2>
+                    <p class="text-gray-600 text-lg">Acceso Salud nació en 2020 con la visión de modernizar el acceso a servicios de salud en el Perú. Desde entonces, hemos conectado a más de un millón de usuarios con centros de salud, implementando tecnología innovadora y un enfoque centrado en el usuario.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action Section -->
+        <section class="mt-12 py-10 bg-blue-600 text-white text-center rounded-none animate__animated animate__fadeIn animate__delay-1s">
+            <h2 class="text-4xl font-bold mb-6">Forma parte de nuestra misión</h2>
+            <p class="text-xl mb-8 max-w-2xl mx-auto">Regístrate ahora y descubre cómo Acceso Salud puede facilitar tu acceso a la atención médica.</p>
+            <a href="acceso.html" class="bg-white text-blue-800 px-10 py-4 rounded-full font-semibold text-lg hover:bg-gray-100 transition duration-300 shadow-lg">Regístrate Ahora</a>
+        </section>
+    </main>
+
+    <!-- Chatbot -->
+    <div id="chatbot" class="fixed bottom-6 right-6 bg-white rounded-xl shadow-2xl w-96 hidden animate__animated animate__fadeInUp animate__delay-1.2s">
+        <div class="bg-blue-700 text-white p-4 rounded-t-xl flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-robot"></i>
+                <h3 class="font-semibold">Asistente Virtual</h3>
+            </div>
+            <button id="closeChatbot" class="text-white hover:text-gray-200"><i class="fas fa-times"></i></button>
+        </div>
+        <div id="chatbotMessages" class="p-4 h-80 overflow-y-auto bg-gray-50"></div>
+        <div class="p-4 border-t bg-white">
+            <input id="chatbotInput" type="text" placeholder="Escribe tu mensaje..." class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <button id="sendChatbot" class="bg-blue-600 text-white px-4 py-2 mt-2 rounded-lg w-full hover:bg-blue-700 transition duration-300">Enviar</button>
+        </div>
+    </div>
+    <button id="openChatbot" class="fixed bottom-6 right-6 bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 transition duration-300"><i class="fas fa-comment text-xl"></i></button>
+
+    <!-- Notification -->
+    <div id="notification" class="fixed top-6 right-6 bg-green-500 text-white p-4 rounded-lg shadow-lg hidden animate__animated animate__fadeIn animate__delay-1.2s">
+        <p id="notificationMessage"></p>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white p-10">
+        <div class="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
+            <div>
+                <h3 class="text-xl font-semibold mb-4">Acceso Salud</h3>
+                <p class="text-gray-400">Tu portal para acceder a los servicios de salud del Estado Peruano con facilidad y confianza.</p>
+            </div>
+            <div>
+                <h3 class="text-xl font-semibold mb-4">Enlaces Rápidos</h3>
+                <ul class="space-y-3">
+                    <li><a href="conocenos.html" class="text-gray-400 hover:text-white transition duration-300">Conócenos</a></li>
+                    <li><a href="contactanos.html" class="text-gray-400 hover:text-white transition duration-300">Contáctanos</a></li>
+                    <li><a href="acceso.html" class="text-gray-400 hover:text-white transition duration-300">Iniciar Sesión</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-xl font-semibold mb-4">Contacto</h3>
+                <p class="text-gray-400 mb-2">📞 <a href="tel:+51113" class="hover:text-white transition duration-300">Línea de Ayuda: 113</a></p>
+                <p class="text-gray-400">💬 <a href="https://api.whatsapp.com/send?phone=+51992637770&text=Hola%20*Tengo%20la%20siguiente%20duda...*" class="hover:text-white transition duration-300">WhatsApp</a></p>
+            </div>
+            <div>
+                <h3 class="text-xl font-semibold mb-4">Síguenos</h3>
+                <div class="flex space-x-4">
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300"><i class="fab fa-facebook-f text-2xl"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300"><i class="fab fa-twitter text-2xl"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300"><i class="fab fa-instagram text-2xl"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-8 text-gray-400">© 2025 Acceso Salud. Todos los derechos reservados.</div>
+    </footer>
+
+    <script src="js/chatbot.js"></script>
+    <script src="js/index.js"></script>
+</body>
+</html>

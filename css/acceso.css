@@ -1,0 +1,159 @@
+body {
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+#loader {
+    transition: opacity 0.5s ease;
+}
+
+#loader.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    animation-duration: 0.5s;
+}
+
+#chatbot {
+    transition: all 0.3s ease;
+    border-radius: 1rem;
+    animation-duration: 0.6s;
+}
+
+#toast {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    max-width: 320px;
+    padding: 1rem 1.25rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    opacity: 0.95;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    transform: translateY(-10px);
+    z-index: 100;
+}
+
+#toast.hidden {
+    opacity: 0;
+    transform: translateY(-20px);
+    pointer-events: none;
+}
+
+#toast i {
+    font-size: 1.75rem;
+}
+
+#toast p {
+    font-size: 1.1rem;
+    font-weight: 600;
+    flex-grow: 1;
+}
+
+#toast.bg-green-500 {
+    background-color: #22c55e;
+    color: white;
+}
+
+#toast.bg-red-500 {
+    background-color: #ef4444;
+    color: white;
+}
+
+#toast.bg-yellow-500 {
+    background-color: #eab308;
+    color: black;
+}
+
+#register-modal {
+    transition: opacity 0.5s ease;
+    animation-duration: 0.6s;
+    z-index: 100;
+}
+
+#register-modal .bg-white {
+    max-width: 700px;
+    width: 90%;
+}
+
+#register-form select,
+#register-form input[type="date"] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="%239CA3AF" d="M7 10l5 5 5-5H7z"/></svg>') no-repeat right 0.75rem center/16px 16px;
+}
+
+#register-form input[type="date"] {
+    background: none;
+}
+
+section.bg-cover {
+    position: relative;
+}
+
+section.bg-cover .absolute {
+    background: rgba(0, 0, 0, 0.7);
+}
+
+footer a {
+    transition: color 0.3s ease;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 0 1.5rem;
+    }
+
+    #chatbot {
+        width: 90%;
+        right: 5%;
+    }
+
+    section.bg-cover {
+        height: 500px;
+        padding-top: 5rem;
+        padding-bottom: 5rem;
+    }
+
+    section.bg-cover h2 {
+        font-size: 2.5rem;
+    }
+
+    #register-modal .bg-white {
+        max-width: 90%;
+    }
+
+    #toast {
+        max-width: 90%;
+        right: 1rem;
+        padding: 0.75rem 1rem;
+    }
+
+    #toast i {
+        font-size: 1.5rem;
+    }
+
+    #toast p {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 640px) {
+    section.bg-cover {
+        height: 400px;
+        padding-top: 4rem;
+        padding-bottom: 4rem;
+    }
+
+    section.bg-cover h2 {
+        font-size: 2rem;
+    }
+}
