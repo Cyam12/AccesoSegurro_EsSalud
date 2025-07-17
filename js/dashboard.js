@@ -407,21 +407,6 @@ document.addEventListener('DOMContentLoaded', () => {
         ticketsModal.classList.add('hidden');
     });
 
-    // Chatbot
-    openChatbot.addEventListener('click', () => {
-        chatbot.classList.remove('hidden');
-    });
-    closeChatbot.addEventListener('click', () => {
-        chatbot.classList.add('hidden');
-    });
-    sendChatbot.addEventListener('click', () => {
-        const message = chatbotInput.value;
-        if (message) {
-            addChatbotMessage('Tú: ' + message);
-            chatbotInput.value = '';
-            setTimeout(() => addChatbotMessage('Asistente: Gracias por tu mensaje, te ayudaré pronto.'), 1000);
-        }
-    });
 
     // Utility Functions
     function showToast(message, color) {
@@ -499,7 +484,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const map = L.map(mapEl).setView([-12.0464, -77.0428], 6); // Centrado en Perú con zoom 6
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-            maxZoom: 18,
+            maxZoom: 20,
         }).addTo(map);
 
         // Marcadores para hospitales en Perú
@@ -521,7 +506,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Actualizar mapa
         document.getElementById('refresh-map').addEventListener('click', () => {
-            map.invalidateSize(); // Reajusta el tamaño del mapa
+            map.invalidateSize(); 
             showToast('Mapa actualizado', 'blue');
         });
     }
