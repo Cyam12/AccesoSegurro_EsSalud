@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acceso Salud - Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="icon" href="https://static.vecteezy.com/system/resources/thumbnails/017/177/954/small_2x/round-medical-cross-symbol-on-transparent-background-free-png.png" type="image/x-icon">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css' rel='stylesheet' />
+</head>
+<body class="bg-gradient-to-br from-gray-100 to-gray-300 font-sans flex">
+    <!-- Loader -->
+    <div id="loader" class="fixed inset-0 bg-white flex items-center justify-center z-60">
+        <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-600"></div>
+    </div>
+
+    <!-- Sidebar -->
+    <aside class="fixed top-0 left-0 h-screen bg-gradient-to-b from-blue-900 to-gray-800 text-white w-64 p-6 shadow-2xl z-50 animate__animated animate__fadeInLeft ">
+        <div class="mb-8">
+            <img src="https://static.vecteezy.com/system/resources/thumbnails/017/177/954/small_2x/round-medical-cross-symbol-on-transparent-background-free-png.png" alt="Logo Acceso Salud" class="w-12 h-12 mb-4">
+            <h2 class="text-2xl font-bold text-white">Acceso Salud</h2>
+        </div>
+        <nav class="flex flex-col space-y-2">
+            <button id="panel-principal" class="flex items-center space-x-4 p-3 rounded-lg bg-blue-800 hover:bg-blue-700 transition duration-300 animate__animated animate__fadeInUp animate__delay-0.2s">
+                <i class="fas fa-tachometer-alt text-xl"></i>
+                <span class="text-sm">Panel Principal</span>
+            </button>
+            <button id="mis-citas" class="flex items-center space-x-4 p-3 rounded-lg bg-gray-700 hover:bg-gray-600 transition duration-300 animate__animated animate__fadeInUp animate__delay-0.3s">
+                <i class="fas fa-calendar-alt text-xl"></i>
+                <span class="text-sm">Mis Citas</span>
+            </button>
+            <button id="reservar-cita" class="flex items-center space-x-4 p-3 rounded-lg bg-gray-700 hover:bg-gray-600 transition duration-300 animate__animated animate__fadeInUp animate__delay-0.4s">
+                <i class="fas fa-calendar-plus text-xl"></i>
+                <span class="text-sm">Reservar Cita</span>
+            </button>
+            <button id="resultados-medicos" class="flex items-center space-x-4 p-3 rounded-lg bg-gray-700 hover:bg-gray-600 transition duration-300 animate__animated animate__fadeInUp animate__delay-0.5s">
+                <i class="fas fa-file-medical text-xl"></i>
+                <span class="text-sm">Resultados Médicos</span>
+            </button>
+            <button id="centros-salud" class="flex items-center space-x-4 p-3 rounded-lg bg-gray-700 hover:bg-gray-600 transition duration-300 animate__animated animate__fadeInUp animate__delay-0.6s">
+                <i class="fas fa-hospital text-xl"></i>
+                <span class="text-sm">Centros de Salud</span>
+            </button>
+            <button id="historial" class="flex items-center space-x-4 p-3 rounded-lg bg-gray-700 hover:bg-gray-600 transition duration-300 animate__animated animate__fadeInUp animate__delay-0.7s">
+                <i class="fas fa-history text-xl"></i>
+                <span class="text-sm">Historial</span>
+            </button>
+            <button id="soporte" class="flex items-center space-x-4 p-3 rounded-lg bg-gray-700 hover:bg-gray-600 transition duration-300 animate__animated animate__fadeInUp animate__delay-0.8s">
+                <i class="fas fa-headset text-xl"></i>
+                <span class="text-sm">Soporte</span>
+            </button>
+            <button id="logout" class="flex items-center space-x-4 p-3 mt-8 bg-red-500 text-white rounded-lg hover:bg-red-600 transition duration-300 animate__animated animate__fadeInUp animate__delay-0.9s">
+                <i class="fas fa-sign-out-alt text-xl"></i>
+                <span class="text-sm font-semibold">Cerrar Sesión</span>
+            </button>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="ml-64 flex-1 p-6">
+        <section class="min-h-screen p-6">
+            <div id="main-content" class="max-w-full mx-auto h-full">
+                <!-- Panel Principal -->
+                <div id="panel-principal-section" class="bg-white p-6 rounded-2xl shadow-lg animate__animated animate__fadeInUp">
+                    <h2 class="text-3xl font-bold text-blue-800 mb-6 flex items-center"><i class="fas fa-tachometer-alt mr-2"></i>Panel Principal</h2>
+                    <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 h-full">
+                        <!-- Información Personal -->
+                        <div class="p-5 bg-gradient-to-r from-blue-50 to-white rounded-lg shadow-md h-full animate__animated animate__fadeIn">
+                            <h3 class="text-xl font-semibold text-blue-700 mb-4 flex items-center"><i class="fas fa-user mr-2"></i>Información Personal</h3>
+                            <div id="user-info" class="text-left space-y-2">
+                                <p><span class="font-semibold text-gray-700">Nombre:</span> <span id="user-name" class="text-gray-900"></span></p>
+                                <p><span class="font-semibold text-gray-700">DNI:</span> <span id="user-dni" class="text-gray-900"></span></p>
+                                <p><span class="font-semibold text-gray-700">Sexo:</span> <span id="user-sex" class="text-gray-900"></span></p>
+                                <p><span class="font-semibold text-gray-700">Fecha Nacimiento:</span> <span id="user-birthdate" class="text-gray-900"></span></p>
+                                <p><span class="font-semibold text-gray-700">Correo:</span> <span id="user-email" class="text-gray-900"></span></p>
+                            </div>
+                            <button id="edit-info" class="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"><i class="fas fa-edit mr-2"></i>Editar</button>
+                        </div>
+                        <!-- Estadísticas de Salud -->
+                        <div class="p-5 bg-gradient-to-r from-green-50 to-white rounded-lg shadow-md h-full animate__animated animate__fadeIn animate__delay-0.2s">
+                            <h3 class="text-xl font-semibold text-green-700 mb-4 flex items-center"><i class="fas fa-heartbeat mr-2"></i>Estadísticas de Salud</h3>
+                            <p class="text-gray-700"><strong>Índice Salud:</strong> 85% <span class="text-green-600 animate-pulse">📈</span></p>
+                            <p class="text-gray-700"><strong>Presión Arterial:</strong> 120/80 mmHg</p>
+                            <p class="text-gray-700"><strong>Glucosa:</strong> 90 mg/dL</p>
+                            <button id="view-stats" class="mt-4 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"><i class="fas fa-chart-line mr-2"></i>Ver Detalle</button>
+                        </div>
+                        <!-- Notificaciones -->
+                        <div class="p-5 bg-gradient-to-r from-yellow-50 to-white rounded-lg shadow-md h-full animate__animated animate__fadeIn animate__delay-0.4s">
+                            <h3 class="text-xl font-semibold text-yellow-700 mb-4 flex items-center"><i class="fas fa-bell mr-2"></i>Notificaciones</h3>
+                            <ul class="space-y-2">
+                                <li class="flex items-center text-gray-800"><i class="fas fa-calendar-day text-blue-500 mr-2"></i>Cita mañana 10:00 AM</li>
+                                <li class="flex items-center text-gray-800"><i class="fas fa-clipboard-list text-green-500 mr-2"></i>Resultados listos</li>
+                                <li class="flex items-center text-gray-800"><i class="fas fa-syringe text-red-500 mr-2"></i>Vacuna pendiente</li>
+                            </ul>
+                            <button id="view-notifications" class="mt-4 bg-yellow-600 text-white px-4 py-2 rounded hover:bg-yellow-700 transition"><i class="fas fa-eye mr-2"></i>Ver Todas</button>
+                        </div>
+                        <!-- Resumen General -->
+                        <div class="p-5 bg-gradient-to-r from-purple-50 to-white rounded-lg shadow-md h-full animate__animated animate__fadeIn animate__delay-0.6s">
+                            <h3 class="text-xl font-semibold text-purple-700 mb-4 flex items-center"><i class="fas fa-info-circle mr-2"></i>Resumen General</h3>
+                            <p class="text-gray-700"><strong>Citas Próximas:</strong> 5</p>
+                            <p class="text-gray-700"><strong>Resultados Pendientes:</strong> 2</p>
+                            <p class="text-gray-700"><strong>Centros Cercanos:</strong> 3</p>
+                            <button id="view-summary" class="mt-4 bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 transition"><i class="fas fa-list mr-2"></i>Ver Resumen</button>
+                        </div>
+                        <!-- Seguros y Pagos -->
+                        <div class="p-5 bg-gradient-to-r from-indigo-50 to-white rounded-lg shadow-md h-full animate__animated animate__fadeIn animate__delay-0.8s col-span-2">
+                            <h3 class="text-xl font-semibold text-indigo-700 mb-4 flex items-center"><i class="fas fa-shield-alt mr-2"></i>Seguros y Pagos</h3>
+                            <p class="text-gray-700"><strong>Estado Seguro:</strong> Activo</p>
+                            <p class="text-gray-700"><strong>Próximo Pago:</strong> 2025-08-01</p>
+                            <p class="text-gray-700"><strong>Monto Pendiente:</strong> $50.00</p>
+                            <button id="manage-insurance" class="mt-4 bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition"><i class="fas fa-credit-card mr-2"></i>Gestionar</button>
+                        </div>
+                        <!-- Calendario -->
+                        <div class="p-5 bg-gradient-to-r from-teal-50 to-white rounded-lg shadow-md h-full animate__animated animate__fadeIn animate__delay-1.0s col-span-2">
+                            <h3 class="text-xl font-semibold text-teal-700 mb-4 flex items-center"><i class="fas fa-calendar mr-2"></i>Calendario</h3>
+                            <div id="calendar" class="bg-white h-48 rounded shadow"></div>
+                            <button id="view-calendar" class="mt-4 bg-teal-600 text-black px-4 py-2 rounded hover:bg-teal-700 transition"><i class="fas fa-calendar-alt mr-2"></i>Ver Detalle</button>
+                        </div>
+                    </div>
+                    <!-- Modal Información Personal -->
+                    <div id="edit-info-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+                        <div class="bg-white p-6 rounded-lg shadow-2xl animate__animated animate__fadeIn">
+                            <h3 class="text-xl font-bold text-blue-800 mb-4">Editar Información</h3>
+                            <input type="text" id="edit-name" placeholder="Nombre" class="w-full p-2 border border-gray-300 rounded mb-4">
+                            <input type="text" id="edit-dni" placeholder="DNI" class="w-full p-2 border border-gray-300 rounded mb-4">
+                            <select id="edit-sex" class="w-full p-2 border border-gray-300 rounded mb-4">
+                                <option value="M">Masculino</option>
+                                <option value="F">Femenino</option>
+                            </select>
+                            <input type="date" id="edit-birthdate" class="w-full p-2 border border-gray-300 rounded mb-4">
+                            <input type="email" id="edit-email" placeholder="Correo" class="w-full p-2 border border-gray-300 rounded mb-4">
+                            <button id="save-info" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">Guardar</button>
+                            <button id="cancel-info" class="mt-2 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition">Cancelar</button>
+                        </div>
+                    </div>
+                    <!-- Modal Estadísticas -->
+                    <div id="stats-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+                        <div class="bg-white p-6 rounded-lg shadow-2xl animate__animated animate__fadeIn">
+                            <h3 class="text-xl font-bold text-green-800 mb-4">Detalles Estadísticas</h3>
+                            <p class="text-gray-700"><strong>Índice Salud:</strong> 85%</p>
+                            <p class="text-gray-700"><strong>Historial Presión:</strong> 120/80 mmHg (Última: 2025-07-10)</p>
+                            <p class="text-gray-700"><strong>Historial Glucosa:</strong> 90 mg/dL (Última: 2025-07-10)</p>
+                            <button id="close-stats" class="mt-4 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition">Cerrar</button>
+                        </div>
+                    </div>
+                    <!-- Modal Notificaciones -->
+                    <div id="notifications-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+                        <div class="bg-white p-6 rounded-lg shadow-2xl animate__animated animate__fadeIn">
+                            <h3 class="text-xl font-bold text-yellow-800 mb-4">Todas las Notificaciones</h3>
+                            <ul class="space-y-2">
+                                <li class="text-gray-700">Cita mañana 10:00 AM - Dr. González</li>
+                                <li class="text-gray-700">Resultados de sangre disponibles</li>
+                                <li class="text-gray-700">Vacuna anual pendiente</li>
+                                <li class="text-gray-700">Mensaje nuevo en bandeja</li>
+                            </ul>
+                            <button id="close-notifications" class="mt-4 bg-yellow-600 text-white px-4 py-2 rounded hover:bg-yellow-700 transition">Cerrar</button>
+                        </div>
+                    </div>
+                    <!-- Modal Resumen -->
+                    <div id="summary-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+                        <div class="bg-white p-6 rounded-lg shadow-2xl animate__animated animate__fadeIn">
+                            <h3 class="text-xl font-bold text-purple-800 mb-4">Resumen Completo</h3>
+                            <p class="text-gray-700"><strong>Citas Próximas:</strong> 5 (Detalles: 3 presenciales, 2 teleconsultas)</p>
+                            <p class="text-gray-700"><strong>Resultados Pendientes:</strong> 2 (Hemograma, Radiografía)</p>
+                            <p class="text-gray-700"><strong>Centros Cercanos:</strong> 3 (Clínica Central, Hospital Nacional)</p>
+                            <button id="close-summary" class="mt-4 bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 transition">Cerrar</button>
+                        </div>
+                    </div>
+                    <!-- Modal Seguros -->
+                    <div id="insurance-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+                        <div class="bg-white p-6 rounded-lg shadow-2xl animate__animated animate__fadeIn">
+                            <h3 class="text-xl font-bold text-indigo-800 mb-4">Gestionar Seguro</h3>
+                            <p class="text-gray-700"><strong>Estado:</strong> Activo</p>
+                            <p class="text-gray-700"><strong>Próximo Pago:</strong> 2025-08-01 - $50.00</p>
+                            <button id="pay-now" class="mt-4 bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition">Pagar Ahora</button>
+                            <button id="close-insurance" class="mt-2 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition">Cerrar</button>
+                        </div>
+                    </div>
+                    <!-- Modal Calendario -->
+                    <div id="calendar-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+                        <div class="bg-white p-6 rounded-lg shadow-2xl animate__animated animate__fadeIn w-3/4 max-w-4xl">
+                            <h3 class="text-xl font-bold text-teal-800 mb-4">Calendario Detallado</h3>
+                            <div id="calendar-detail" class="bg-white h-96 rounded shadow mb-4"></div> <!-- Contenedor para el calendario detallado -->
+                            <button id="close-calendar" class="mt-4 bg-teal-600 text-black px-4 py-2 rounded hover:bg-teal-700 transition">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mis Citas -->
+                <div id="mis-citas-section" class="bg-white p-6 rounded-2xl shadow-lg hidden animate__animated animate__fadeInUp">
+                    <h2 class="text-3xl font-bold text-green-800 mb-6 flex items-center"><i class="fas fa-calendar-alt mr-2"></i>Mis Citas</h2>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 h-full">
+                        <!-- Lista de Citas -->
+                        <div class="p-5 bg-gradient-to-r from-green-50 to-white rounded-lg shadow-md h-full animate__animated animate__fadeIn">
+                            <h3 class="text-xl font-semibold text-green-700 mb-4 flex items-center"><i class="fas fa-list-ul mr-2"></i>Lista de Citas</h3>
+                            <div class="space-y-4">
+                                <div class="p-4 bg-white rounded-lg shadow-md">
+                                    <p class="text-gray-700"><strong>Médico:</strong> Dr. Juan Pérez</p>
+                                    <p class="text-gray-700"><strong>Fecha:</strong> 2025-07-16, 10:00 AM</p>
+                                    <p class="text-gray-700"><strong>Estado:</strong> Confirmada</p>
+                                    <button id="view-appointment-1" class="mt-2 bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700 transition">Ver</button>
+                                </div>
+                                <div class="p-4 bg-white rounded-lg shadow-md">
+                                    <p class="text-gray-700"><strong>Médico:</strong> Dra. María Gómez</p>
+                                    <p class="text-gray-700"><strong>Fecha:</strong> 2025-07-18, 02:00 PM</p>
+                                    <p class="text-gray-700"><strong>Estado:</strong> Pendiente</p>
+                                    <button id="view-appointment-2" class="mt-2 bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700 transition">Ver</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Gestión de Citas -->
+                        <div class="p-5 bg-gradient-to-r from-green-100 to-white rounded-lg shadow-md h-full animate__animated animate__fadeIn animate__delay-0.2s">
+                            <h3 class="text-xl font-semibold text-green-700 mb-4 flex items-center"><i class="fas fa-tools mr-2"></i>Gestión de Citas</h3>
+                            <button id="new-cita" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 mb-2 transition"><i class="fas fa-plus mr-2"></i>Nueva Cita</button>
+                            <button id="filter-citas" class="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 mb-2 transition"><i class="fas fa-filter mr-2"></i>Filtrar</button>
+                            <button id="export-citas" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"><i class="fas fa-download mr-2"></i>Exportar</button>
+                        </div>
+                        <!-- Historial de Cancelaciones -->
+                        <div class="p-5 bg-gradient-to-r from-red-50 to-white rounded-lg shadow-md h-full animate__animated animate__fadeIn animate__delay-0.4s">
+                            <h3 class="text-xl font-semibold text-red-700 mb-4 flex items-center"><i class="fas fa-times-circle mr-2"></i>Historial Cancelaciones</h3>
+                            <ul class="space-y-2">
+                                <li class="text-gray-700">2025-07-10 - Dr. López (Cancelada)</li>
+                                <li class="text-gray-700">2025-07-05 - Dra. Torres (Reprogramada)</li>
+                            </ul>
+                            <button id="view-cancellations" class="mt-4 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition"><i class="fas fa-eye mr-2"></i>Ver Más</button>
+                        </div>
+                        <!-- Recordatorios -->
+                        <div class="p-5 bg-gradient-to-r from-yellow-50 to-white rounded-lg shadow-md h-full animate__animated animate__fadeIn animate__delay-0.6s">
+                            <h3 class="text-xl font-semibold text-yellow-700 mb-4 flex items-center"><i class="fas fa-bell mr-2"></i>Recordatorios</h3>
+                            <p class="text-gray-700">Cita mañana 10:00 AM - Preparar documentos</p>
+                            <button id="set-reminder" class="mt-4 bg-yellow-600 text-white px-4 py-2 rounded hover:bg-yellow-700 transition"><i class="fas fa-clock mr-2"></i>Configurar</button>
+                        </div>
+                    </div>
+                    <!-- Modal Ver Cita -->
+                    <div id="appointment-modal-1" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+                        <div class="bg-white p-6 rounded-lg shadow-2xl animate__animated animate__fadeIn">
+                            <h3 class="text-xl font-bold text-green-800 mb-4">Detalles Cita</h3>
+                            <p class="text-gray-700"><strong>Médico:</strong> Dr. Juan Pérez</p>
+                            <p class="text-gray-700"><strong>Fecha:</strong> 2025-07-16, 10:00 AM</p>
+                            <p class="text-gray-700"><strong>Especialidad:</strong> Cardiología</p>
+                            <button id="close-appointment-1" class="mt-4 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition">Cerrar</button>
+                        </div>
+                    </div>
+                    <!-- Modal Nueva Cita -->
+                    <div id="new-cita-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+                        <div class="bg-white p-6 rounded-lg shadow-2xl animate__animated animate__fadeIn">
+                            <h3 class="text-xl font-bold text-green-800 mb-4">Nueva Cita</h3>
+                            <select id="new-specialty" class="w-full p-2 border border-gray-300 rounded mb-4">
+                                <option value="cardiologia">Cardiología</option>
+                                <option value="dermatologia">Dermatología</option>
+                            </select>
+                            <input type="date" id="new-date" class="w-full p-2 border border-gray-300 rounded mb-4">
+                            <button id="save-new-cita" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition">Guardar</button>
+                            <button id="cancel-new-cita" class="mt-2 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition">Cancelar</button>
+                        </div>
+                    </div>
+                    <!-- Modal Filtrar -->
+                    <div id="filter-citas-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+                        <div class="bg-white p-6 rounded-lg shadow-2xl animate__animated animate__fadeIn">
+                            <h3 class="text-xl font-bold text-gray-800 mb-4">Filtrar Citas</h3>
+                            <select id="filter-status" class="w-full p-2 border border-gray-300 rounded mb-4">
+                                <option value="all">Todas</option>
+                                <option value="confirmada">Confirmadas</option>
+                            </select>
+                            <input type="date" id="filter-date" class="w-full p-2 border border-gray-300 rounded mb-4">
+                            <button id="apply-filter" class="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 transition">Aplicar</button>
+                            <button id="cancel-filter" class="mt-2 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition">Cancelar</button>
+                        </div>
+                    </div>
+                    <!-- Modal Cancelaciones -->
+                    <div id="cancellations-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+                        <div class="bg-white p-6 rounded-lg shadow-2xl animate__animated animate__fadeIn">
+                            <h3 class="text-xl font-bold text-red-800 mb-4">Historial Cancelaciones</h3>
+                            <ul class="space-y-2">
+                                <li class="text-gray-700">2025-07-10 - Dr. López</li>
+                                <li class="text-gray-700">2025-07-05 - Dra. Torres</li>
+                                <li class="text-gray-700">2025-06-20 - Dr. Pérez</li>
+                            </ul>
+                            <button id="close-cancellations" class="mt-4 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition">Cerrar</button>
+                        </div>
+                    </div>
+                    <!-- Modal Recordatorios -->
+                    <div id="reminder-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+                        <div class="bg-white p-6 rounded-lg shadow-2xl animate__animated animate__fadeIn">
+                            <h3 class="text-xl font-bold text-yellow-800 mb-4">Configurar Recordatorio</h3>
+                            <input type="time" id="reminder-time" class="w-full p-2 border border-gray-300 rounded mb-4">
+                            <button id="save-reminder" class="bg-yellow-600 text-white px-4 py-2 rounded hover:bg-yellow-700 transition">Guardar</button>
+                            <button id="cancel-reminder" class="mt-2 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition">Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reservar Cita -->
+                <div id="reservar-cita-section" class="bg-white p-6 rounded-2xl shadow-lg hidden animate__animated animate__fadeInUp">
+                    <h2 class="text-3xl font-bold text-teal-800 mb-6 flex items-center"><i class="fas fa-calendar-plus mr-2"></i>Reservar Cita</h2>
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 h-full">
+                        <!-- Selección de Especialidad -->
+                        <div class="p-5 bg-gradient-to-r from-teal-50 to-white rounded-lg shadow-md h-full animate__animated animate__fadeIn">
+                            <h3 class="text-xl font-semibold text-teal-700 mb-4 flex items-center"><i class="fas fa-stethoscope mr-2"></i>Especialidad</h3>
+                            <select id="specialty" class="w-full p-2 border border-gray-300 rounded mb-4">
+                                <option value="cardiologia">Cardiología</option>
+                                <option value="dermatologia">Dermatología</option>
+                                <option value="pediatria">Pediatría</option>
+                            </select>
+                            <button id="search-specialists" class="bg-teal-600 text-black px-4 py-2 rounded hover:bg-teal-700 transition"><i class="fas fa-search mr-2"></i>Buscar Especialistas</button>
+                        </div>
+                        <!-- Tipo de Consulta -->
+                        <div class="p-5 bg-gradient-to-r from-teal-100 to-white rounded-lg shadow-md h-full animate__animated animate__fadeIn animate__delay-0.2s">
+                            <h3 class="text-xl font-semibold text-teal-700 mb-4 flex items-center"><i class="fas fa-video mr-2"></i>Tipo de Consulta</h3>
+                            <div class="space-y-2">
+                                <button id="presencial-btn" class="w-full bg-teal-200 p-3 rounded text-teal-800 hover:bg-teal-300 transition"><i class="fas fa-hospital mr-2"></i>Presencial</button>
+                                <button id="teleconsulta-btn" class="w-full bg-teal-200 p-3 rounded text-teal-800 hover:bg-teal-300 transition"><i class="fas fa-video mr-2"></i>Teleconsulta</button>
+                            </div>
+                        </div>
+                        <!-- Selección de Fecha -->
+                        <div class="p-5 bg-gradient-to-r from-teal-200 to-white rounded-lg shadow-md h-full animate__animated animate__fadeIn animate__delay-0.4s">
+                            <h3 class="text-xl font-semibold text-teal-700 mb-4 flex items-center"><i class="fas fa-calendar-day mr-2"></i>Fecha</h3>
+                            <input type="date" id="preferred-date" class="w-full p-2 border border-gray-300 rounded mb-4">
+                            <button id="check-availability" class="bg-teal-600 text-black px-4 py-2 rounded hover:bg-teal-700 transition"><i class="fas fa-check mr-2"></i>Ver Disponibilidad</button>
+                        </div>
+                        <!-- Horarios Disponibles -->
+                        <div class="p-5 bg-gradient-to-r from-green-50 to-white rounded-lg shadow-md h-full animate__animated animate__fadeIn animate__delay-0.6s col-span-2">
+                            <h3 class="text-xl font-semibold text-green-700 mb-4 flex items-center"><i class="fas fa-clock mr-2"></i>Horarios Disponibles</h3>
+                            <div id="schedules" class="space-x-2 flex flex-wrap">
+                                <button class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600 transition">2025-07-17, 09:00 AM</button>
+                                <button class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600 transition">2025-07-17, 11:00 AM</button>
+                            </div>
+                        </div>
+                        <!-- Documentos Requeridos -->
+                        <div class="p-5 bg-gradient-to-r from-yellow-50 to-white rounded-lg shadow-md h-full animate__animated animate__fadeIn animate__delay-0.8s">
+                            <h3 class="text-xl font-semibold text-yellow-700 mb-4 flex items-center"><i class="fas fa-file-alt mr-2"></i>Documentos Requeridos</h3>
+                            <ul class="text-gray-700 space-y-2">
+                                <li>DNI o Pasaporte</li>
+                                <li>Historia Clínica (si aplica)</li>
+                            </ul>
+                            <button id="upload-docs" class="mt-4 bg-yellow-600 text-white px-4 py-2 rounded hover:bg-yellow-700 transition"><i class="fas fa-upload mr-2"></i>Subir</button>
+                        </div>
+                        <!-- Confirmación -->
+                        <div class="p-5 bg-gradient-to-r from-blue-50 to-white rounded-lg shadow-md h-full animate__animated animate__fadeIn animate__delay-1.0s col-span-2">
+                            <h3 class="text-xl font-semibold text-blue-700 mb-4 flex items-center"><i class="fas fa-check-circle mr-2"></i>Confirmación</h3>
+                            <button id="confirm-booking" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"><i class="fas fa-check mr-2"></i>Confirmar Reserva</button>
+                        </div>
+                    </div>
+                    <!-- Modal Especialistas -->
+                    <div id="specialists-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+                        <div class="bg-white p-6 rounded-lg shadow-2xl animate__animated animate__fadeIn">
+                            <h3 class="text-xl font-bold text-teal-800 mb-4">Especialistas Disponibles</h3>
+                            <ul class="space-y-2">
+                                <li class="text-gray-700">Dr. Juan Pérez - Cardiología</li>
+                                <li class="text-gray-700">Dra. María Gómez - Dermatología</li>
+                            </ul>
+                            <button id="close-specialists" class="mt-4 bg-teal-600 text-black px-4 py-2 rounded hover:bg-teal-700 transition">Cerrar</button>
+                        </div>
+                    </div>
+                    <!-- Modal Disponibilidad -->
+                    <div id="availability-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+                        <div class="bg-white p-6 rounded-lg shadow-2xl animate__animated animate__fadeIn">
+                            <h3 class="text-xl font-bold text-green-800 mb-4">Horarios Disponibles</h3>
+                            <div class="space-x-2 flex flex-wrap">
+                                <button class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600 transition">2025-07-17, 09:00 AM</button>
+                                <button class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600 transition">2025-07-17, 11:00 AM</button>
+                            </div>
+                            <button id="close-availability" class="mt-4 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition">Cerrar</button>
+                        </div>
+                    </div>
+                    <!-- Modal Subir Documentos -->
+                    <div id="docs-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+                        <div class="bg-white p-6 rounded-lg shadow-2xl animate__animated animate__fadeIn">
+                            <h3 class="text-xl font-bold text-yellow-800 mb-4">Subir Documentos</h3>
+                            <input type="file" id="doc-upload" class="w-full p-2 border border-gray-300 rounded mb-4">
+                            <button id="upload-doc" class="bg-yellow-600 text-white px-4 py-2 rounded hover:bg-yellow-700 transition">Subir</button>
+                            <button id="cancel-doc" class="mt-2 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition">Cancelar</button>
+                        </div>
+                    </div>
+                    <!-- Modal Confirmar Reserva -->
+                    <div id="confirm-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+                        <div class="bg-white p-6 rounded-lg shadow-2xl animate__animated animate__fadeIn">
+                            <h3 class="text-xl font-bold text-blue-800 mb-4">Confirmar Reserva</h3>
+                            <p class="text-gray-700">¿Confirmas la cita para 2025-07-17, 09:00 AM?</p>
+                            <button id="confirm-yes" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">Sí</button>
+                            <button id="confirm-no" class="mt-2 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition">No</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resultados Médicos -->
+                <div id="resultados-medicos-section" class="bg-white p-6 rounded-2xl shadow-lg hidden animate__animated animate__fadeInUp">
+                    <h2 class="text-3xl font-bold text-red-800 mb-6 flex items-center"><i class="fas fa-file-medical mr-2"></i>Resultados Médicos</h2>
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 h-full">
+                        <!-- Lista de Resultados -->
+                        <div class="p-5 bg-gradient-to-r from-red-50 to-white rounded-lg shadow-md h-full animate__animated animate__fadeIn">
+                            <h3 class="text-xl font-semibold text-red-700 mb-4 flex items-center"><i class="fas fa-list mr-2"></i>Lista de Resultados</h3>
+                            <div class="space-y-4">
+                                <div class="p-4 bg-white rounded-lg shadow-md">
+                                    <p class="text-gray-700"><strong>Análisis:</strong> Hemograma</p>
+                                    <p class="text-gray-700"><strong>Fecha:</strong> 2025-07-10</p>
+                                    <p class="text-gray-700"><strong>Estado:</strong> Disponible</p>
+                                    <button id="view-result-1" class="mt-2 bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 transition">Ver</button>
+                                </div>
+                                <div class="p-4 bg-white rounded-lg shadow-md">
+                                    <p class="text-gray-700"><strong>Análisis:</strong> Radiografía</p>
+                                    <p class="text-gray-700"><strong>Fecha:</strong> 2025-07-12</p>
+                                    <p class="text-gray-700"><strong>Estado:</strong> Procesando</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Nuevos Resultados -->
+                        <div class="p-5 bg-gradient-to-r from-red-100 to-white rounded-lg shadow-md h-full animate__animated animate__fadeIn animate__delay-0.2s">
+                            <h3 class="text-xl font-semibold text-red-700 mb-4 flex items-center"><i class="fas fa-plus-circle mr-2"></i>Nuevos Resultados</h3>
+                            <button id="add-result" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 mb-2 transition"><i class="fas fa-plus mr-2"></i>Agregar</button>
+                            <button id="filter-results" class="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 transition"><i class="fas fa-filter mr-2"></i>Filtrar</button>
+                        </div>
+                        <!-- Interpretaciones -->
+                        <div class="p-5 bg-gradient-to-r from-purple-50 to-white rounded-lg shadow-md h-full animate__animated animate__fadeIn animate__delay-0.4s">
+                            <h3 class="text-xl font-semibold text-purple-700 mb-4 flex items-center"><i class="fas fa-notes-medical mr-2"></i>Interpretaciones</h3>
+                            <p class="text-gray-700">Hemograma: Normal</p>
+                            <p class="text-gray-700">Radiografía: En revisión</p>
+                            <button id="view-interpretations" class="mt-4 bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 transition"><i class="fas fa-eye mr-2"></i>Ver Todas</button>
+                        </div>
+                        <!-- Alertas Médicas -->
+                        <div class="p-5 bg-gradient-to-r from-yellow-50 to-white rounded-lg shadow-md h-full animate__animated animate__fadeIn animate__delay-0.6s">
+                            <h3 class="text-xl font-semibold text-yellow-700 mb-4 flex items-center"><i class="fas fa-exclamation-triangle mr-2"></i>Alertas Médicas</h3>
+                            <p class="text-gray-700">Glucosa alta detectada</p>
+                            <button id="manage-alerts" class="mt-4 bg-yellow-600 text-white px-4 py-2 rounded hover:bg-yellow-700 transition"><i class="fas fa-bell mr-2"></i>Gestionar</button>
+                        </div>
+                        <!-- Descargas -->
+                        <div class="p-5 bg-gradient-to-r from-blue-50 to-white rounded-lg shadow-md h-full animate__animated animate__fadeIn animate__delay-0.8s col-span-2">
+                            <h3 class="text-xl font-semibold text-blue-700 mb-4 flex items-center"><i class="fas fa-download mr-2"></i>Descargas</h3>
+                            <button id="download-all" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 mb-2 transition"><i class="fas fa-file-download mr-2"></i>Descargar Todo</button>
+                            <button id="download-pdf" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"><i class="fas fa-file-pdf mr-2"></i>Descargar PDF</button>
+                        </div>
+                    </div>
+                    <!-- Modal Ver Resultado -->
+                    <div id="result-modal-1" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+                        <div class="bg-white p-6 rounded-lg shadow-2xl animate__animated animate__fadeIn">
+                            <h3 class="text-xl font-bold text-red-800 mb-4">Detalles Resultado</h3>
+                            <p class="text-gray-700"><strong>Análisis:</strong> Hemograma</p>
+                            <p class="text-gray-700"><strong>Valor:</strong> Normal</p>
+                            <p class="text-gray-700"><strong>Observaciones:</strong> Sin anomalías</p>
+                            <button id="close-result-1" class="mt-4 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition">Cerrar</button>
+                        </div>
+                    </div>
+                    <!-- Modal Agregar Resultado -->
+                    <div id="add-result-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+                        <div class="bg-white p-6 rounded-lg shadow-2xl animate__animated animate__fadeIn">
+                            <h3 class="text-xl font-bold text-red-800 mb-4">Agregar Resultado</h3>
+                            <input type="text" id="result-name" placeholder="Nombre Análisis" class="w-full p-2 border border-gray-300 rounded mb-4">
+                            <input type="date" id="result-date" class="w-full p-2 border border-gray-300 rounded mb-4">
+                            <select id="result-status" class="w-full p-2 border border-gray-300 rounded mb-4">
+                                <option value="disponible">Disponible</option>
+                                <option value="procesando">Procesando</option>
+                            </select>
+                            <button id="save-result" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition">Guardar</button>
+                            <button id="cancel-result" class="mt-2 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition">Cancelar</button>
+                        </div>
+                    </div>
+                    <!-- Modal Filtrar -->
+                    <div id="filter-results-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+                        <div class="bg-white p-6 rounded-lg shadow-2xl animate__animated animate__fadeIn">
+                            <h3 class="text-xl font-bold text-gray-800 mb-4">Filtrar Resultados</h3>
+                            <select id="filter-result-status" class="w-full p-2 border border-gray-300 rounded mb-4">
+                                <option value="all">Todos</option>
+                                <option value="disponible">Disponibles</option>
+                            </select>
+                            <input type="date" id="filter-result-date" class="w-full p-2 border border-gray-300 rounded mb-4">
+                            <button id="apply-filter-result" class="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 transition">Aplicar</button>
+                            <button id="cancel-filter-result" class="mt-2 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition">Cancelar</button>
+                        </div>
+                    </div>
+                    <!-- Modal Interpretaciones -->
+                    <div id="interpretations-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+                        <div class="bg-white p-6 rounded-lg shadow-2xl animate__animated animate__fadeIn">
+                            <h3 class="text-xl font-bold text-purple-800 mb-4">Interpretaciones Completas</h3>
+                            <p class="text-gray-700">Hemograma: Normal - Sin anomalías detectadas</p>
+                            <p class="text-gray-700">Radiografía: En revisión por especialista</p>
+                            <button id="close-interpretations" class="mt-4 bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 transition">Cerrar</button>
+                        </div>
+                    </div>
+                    <!-- Modal Alertas -->
+                    <div id="alerts-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+                        <div class="bg-white p-6 rounded-lg shadow-2xl animate__animated animate__fadeIn">
+                            <h3 class="text-xl font-bold text-yellow-800 mb-4">Gestionar Alertas</h3>
+                            <p class="text-gray-700">Glucosa alta: 120 mg/dL - Consultar médico</p>
+                            <button id="acknowledge-alert" class="mt-4 bg-yellow-600 text-white px-4 py-2 rounded hover:bg-yellow-700 transition">Aceptar</button>
+                            <button id="close-alerts" class="mt-2 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Centros de Salud -->
+                <div id="centros-salud-section" class="bg-white p-6 rounded-2xl shadow-lg hidden animate__animated animate__fadeInUp">
+                    <h2 class="text-3xl font-bold text-indigo-800 mb-6 flex items-center"><i class="fas fa-hospital mr-2"></i>Centros de Salud</h2>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 h-full">
+                        <!-- Lista de Centros -->
+                        <div class="p-5 bg-gradient-to-r from-indigo-50 to-white rounded-lg shadow-md h-full animate__animated animate__fadeIn">
+                            <h3 class="text-xl font-semibold text-indigo-700 mb-4 flex items-center"><i class="fas fa-map-marker-alt mr-2"></i>Lista de Centros</h3>
+                            <div class="space-y-4">
+                                <div class="p-4 bg-white rounded-lg shadow-md">
+                                    <p class="text-gray-700"><strong>Nombre:</strong> Clínica Central</p>
+                                    <p class="text-gray-700"><strong>Distancia:</strong> 2 km</p>
+                                    <button id="view-center-1" class="mt-2 bg-indigo-600 text-white px-3 py-1 rounded hover:bg-indigo-700 transition">Ver</button>
+                                </div>
+                                <div class="p-4 bg-white rounded-lg shadow-md">
+                                    <p class="text-gray-700"><strong>Nombre:</strong> Hospital Nacional</p>
+                                    <p class="text-gray-700"><strong>Distancia:</strong> 5 km</p>
+                                    <button id="view-center-2" class="mt-2 bg-indigo-600 text-white px-3 py-1 rounded hover:bg-indigo-700 transition">Ver</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Filtros y Búsqueda -->
+                        <div class="p-5 bg-gradient-to-r from-indigo-100 to-white rounded-lg shadow-md h-full animate__animated animate__fadeIn animate__delay-0.2s">
+                            <h3 class="text-xl font-semibold text-indigo-700 mb-4 flex items-center"><i class="fas fa-filter mr-2"></i>Filtros</h3>
+                            <select id="filter-type" class="w-full p-2 border border-gray-300 rounded mb-4">
+                                <option value="all">Todos</option>
+                                <option value="hospital">Hospitales</option>
+                            </select>
+                            <input type="text" id="search-center" placeholder="Buscar por nombre" class="w-full p-2 border border-gray-300 rounded mb-4">
+                            <button id="search-centers" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition"><i class="fas fa-search mr-2"></i>Buscar</button>
+                        </div>
+                        <!-- Servicios Disponibles -->
+                        <div class="p-5 bg-gradient-to-r from-teal-50 to-white rounded-lg shadow-md h-full animate__animated animate__fadeIn animate__delay-0.4s">
+                            <h3 class="text-xl font-semibold text-teal-700 mb-4 flex items-center"><i class="fas fa-concierge-bell mr-2"></i>Servicios</h3>
+                            <ul class="text-gray-700 space-y-2">
+                                <li>Emergencias 24/7</li>
+                                <li>Consultas Generales</li>
+                            </ul>
+                            <button id="view-services" class="mt-4 bg-teal-600 text-black px-4 py-2 rounded hover:bg-teal-700 transition"><i class="fas fa-eye mr-2"></i>Ver Más</button>
+                        </div>
+                        <!-- Mapa Interactivo -->
+                        <div class="p-5 bg-gradient-to-r from-blue-50 to-white rounded-lg shadow-md h-full animate__animated animate__fadeIn animate__delay-0.6s">
+                            <h3 class="text-xl font-semibold text-blue-700 mb-4 flex items-center"><i class="fas fa-map mr-2"></i>Mapa</h3>
+                            
+                            <div id="mapid" class="bg-gray-200 h-64 sm:h-80 rounded mb-4"></div>
+                            <button id="refresh-map" class="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"><i class="fas fa-sync mr-2"></i>Actualizar</button>
+                        </div>
+                        <!-- Opiniones -->
+                        <div class="p-5 bg-gradient-to-r from-yellow-50 to-white rounded-lg shadow-md h-full animate__animated animate__fadeIn animate__delay-0.8s col-span-2">
+                            <h3 class="text-xl font-semibold text-yellow-700 mb-4 flex items-center"><i class="fas fa-comments mr-2"></i>Opiniones</h3>
+                            <p class="text-gray-700">Clínica Central: 4.5/5 (10 reseñas)</p>
+                            <button id="view-reviews" class="mt-4 bg-yellow-600 text-white px-4 py-2 rounded hover:bg-yellow-700 transition"><i class="fas fa-star mr-2"></i>Ver Reseñas</button>
+                        </div>
+                    </div>
+                    <!-- Modal Ver Centro -->
+                    <div id="center-modal-1" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+                        <div class="bg-white p-6 rounded-lg shadow-2xl animate__animated animate__fadeIn">
+                            <h3 class="text-xl font-bold text-indigo-800 mb-4">Detalles Centro</h3>
+                            <p class="text-gray-700"><strong>Nombre:</strong> Clínica Central</p>
+                            <p class="text-gray-700"><strong>Dirección:</strong> Av. Principal 123</p>
+                            <button id="close-center-1" class="mt-4 bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition">Cerrar</button>
+                        </div>
+                    </div>
+                    <!-- Modal Servicios -->
+                    <div id="services-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+                        <div class="bg-white p-6 rounded-lg shadow-2xl animate__animated animate__fadeIn">
+                            <h3 class="text-xl font-bold text-teal-800 mb-4">Servicios Disponibles</h3>
+                            <ul class="text-gray-700 space-y-2">
+                                <li>Emergencias 24/7</li>
+                                <li>Consultas Generales</li>
+                                <li>Laboratorio</li>
+                            </ul>
+                            <button id="close-services" class="mt-4 bg-teal-600 text-black px-4 py-2 rounded hover:bg-teal-700 transition">Cerrar</button>
+                        </div>
+                    </div>
+                    <!-- Modal Reseñas -->
+                    <div id="reviews-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+                        <div class="bg-white p-6 rounded-lg shadow-2xl animate__animated animate__fadeIn">
+                            <h3 class="text-xl font-bold text-yellow-800 mb-4">Reseñas</h3>
+                            <p class="text-gray-700">Clínica Central: "Excelente atención" - 4.5/5</p>
+                            <button id="close-reviews" class="mt-4 bg-yellow-600 text-white px-4 py-2 rounded hover:bg-yellow-700 transition">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Historial -->
+                <div id="historial-section" class="bg-white p-6 rounded-2xl shadow-lg hidden animate__animated animate__fadeInUp">
+                    <h2 class="text-3xl font-bold text-purple-800 mb-6 flex items-center"><i class="fas fa-history mr-2"></i>Historial</h2>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 h-full">
+                        <!-- Historial Clínico -->
+                        <div class="p-5 bg-gradient-to-r from-purple-50 to-white rounded-lg shadow-md h-full animate__animated animate__fadeIn">
+                            <h3 class="text-xl font-semibold text-purple-700 mb-4 flex items-center"><i class="fas fa-book-medical mr-2"></i>Historial Clínico</h3>
+                            <ul class="space-y-2">
+                                <li class="text-gray-700">2025-07-01 - Consulta General</li>
+                                <li class="text-gray-700">2025-06-15 - Examen Sangre</li>
+                            </ul>
+                            <button id="view-clinical" class="mt-4 bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 transition"><i class="fas fa-eye mr-2"></i>Ver</button>
+                        </div>
+                        <!-- Historial de Pagos -->
+                        <div class="p-5 bg-gradient-to-r from-indigo-50 to-white rounded-lg shadow-md h-full animate__animated animate__fadeIn animate__delay-0.2s">
+                            <h3 class="text-xl font-semibold text-indigo-700 mb-4 flex items-center"><i class="fas fa-money-bill-wave mr-2"></i>Historial Pagos</h3>
+                            <ul class="space-y-2">
+                                <li class="text-gray-700">2025-07-01 - $50.00</li>
+                                <li class="text-gray-700">2025-06-01 - $50.00</li>
+                            </ul>
+                            <button id="view-payments" class="mt-4 bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition"><i class="fas fa-eye mr-2"></i>Ver</button>
+                        </div>
+                        <!-- Historial Vacunaciones -->
+                        <div class="p-5 bg-gradient-to-r from-green-50 to-white rounded-lg shadow-md h-full animate__animated animate__fadeIn animate__delay-0.4s">
+                            <h3 class="text-xl font-semibold text-green-700 mb-4 flex items-center"><i class="fas fa-syringe mr-2"></i>Historial Vacunaciones</h3>
+                            <ul class="space-y-2">
+                                <li class="text-gray-700">2025-06-01 - Influenza</li>
+                                <li class="text-gray-700">2024-12-01 - Tétanos</li>
+                            </ul>
+                            <button id="view-vaccines" class="mt-4 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"><i class="fas fa-eye mr-2"></i>Ver</button>
+                        </div>
+                        <!-- Filtros -->
+                        <div class="p-5 bg-gradient-to-r from-gray-50 to-white rounded-lg shadow-md h-full animate__animated animate__fadeIn animate__delay-0.6s">
+                            <h3 class="text-xl font-semibold text-gray-700 mb-4 flex items-center"><i class="fas fa-filter mr-2"></i>Filtros</h3>
+                            <select id="filter-history-type" class="w-full p-2 border border-gray-300 rounded mb-4">
+                                <option value="all">Todos</option>
+                                <option value="clinico">Clínico</option>
+                            </select>
+                            <input type="date" id="filter-history-date" class="w-full p-2 border border-gray-300 rounded mb-4">
+                            <button id="apply-filter-history" class="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 transition"><i class="fas fa-check mr-2"></i>Aplicar</button>
+                        </div>
+                        <!-- Exportación -->
+                        <div class="p-5 bg-gradient-to-r from-blue-50 to-white rounded-lg shadow-md h-full animate__animated animate__fadeIn animate__delay-0.8s col-span-2">
+                            <h3 class="text-xl font-semibold text-blue-700 mb-4 flex items-center"><i class="fas fa-download mr-2"></i>Exportación</h3>
+                            <button id="export-all" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 mb-2 transition"><i class="fas fa-file-download mr-2"></i>Exportar Todo</button>
+                            <button id="export-pdf" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"><i class="fas fa-file-pdf mr-2"></i>Exportar PDF</button>
+                        </div>
+                    </div>
+                    <!-- Modal Historial Clínico -->
+                    <div id="clinical-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+                        <div class="bg-white p-6 rounded-lg shadow-2xl animate__animated animate__fadeIn">
+                            <h3 class="text-xl font-bold text-purple-800 mb-4">Historial Clínico</h3>
+                            <ul class="space-y-2">
+                                <li class="text-gray-700">2025-07-01 - Consulta General - Dr. Pérez</li>
+                                <li class="text-gray-700">2025-06-15 - Examen Sangre - Dra. Gómez</li>
+                            </ul>
+                            <button id="close-clinical" class="mt-4 bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 transition">Cerrar</button>
+                        </div>
+                    </div>
+                    <!-- Modal Pagos -->
+                    <div id="payments-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+                        <div class="bg-white p-6 rounded-lg shadow-2xl animate__animated animate__fadeIn">
+                            <h3 class="text-xl font-bold text-indigo-800 mb-4">Historial Pagos</h3>
+                            <ul class="space-y-2">
+                                <li class="text-gray-700">2025-07-01 - $50.00 - Pagado</li>
+                                <li class="text-gray-700">2025-06-01 - $50.00 - Pagado</li>
+                            </ul>
+                            <button id="close-payments" class="mt-4 bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition">Cerrar</button>
+                        </div>
+                    </div>
+                    <!-- Modal Vacunaciones -->
+                    <div id="vaccines-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+                        <div class="bg-white p-6 rounded-lg shadow-2xl animate__animated animate__fadeIn">
+                            <h3 class="text-xl font-bold text-green-800 mb-4">Historial Vacunaciones</h3>
+                            <ul class="space-y-2">
+                                <li class="text-gray-700">2025-06-01 - Influenza - Completada</li>
+                                <li class="text-gray-700">2024-12-01 - Tétanos - Completada</li>
+                            </ul>
+                            <button id="close-vaccines" class="mt-4 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Soporte -->
+                <div id="soporte-section" class="bg-white p-6 rounded-2xl shadow-lg hidden animate__animated animate__fadeInUp">
+                    <h2 class="text-3xl font-bold text-orange-800 mb-6 flex items-center"><i class="fas fa-headset mr-2"></i>Soporte</h2>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 h-full">
+                        <!-- Contacto -->
+                        <div class="p-5 bg-gradient-to-r from-orange-50 to-white rounded-lg shadow-md h-full animate__animated animate__fadeIn">
+                            <h3 class="text-xl font-semibold text-orange-700 mb-4 flex items-center"><i class="fas fa-phone mr-2"></i>Contacto</h3>
+                            <p class="text-gray-700"><strong>Línea de Ayuda:</strong> 113</p>
+                            <p class="text-gray-700"><strong>Email:</strong> soporte@accesosalud.com</p>
+                            <button id="call-support" class="mt-4 bg-orange-600 text-black px-4 py-2 rounded hover:bg-orange-700 transition"><i class="fas fa-phone-alt mr-2"></i>Llamar</button>
+                        </div>
+                        <!-- Chat en Vivo -->
+                        <div class="p-5 bg-gradient-to-r from-orange-100 to-white rounded-lg shadow-md h-full animate__animated animate__fadeIn animate__delay-0.2s">
+                            <h3 class="text-xl font-semibold text-orange-700 mb-4 flex items-center"><i class="fas fa-comment mr-2"></i>Chat en Vivo</h3>
+                            <button id="start-chat" class="bg-orange-600 text-black px-4 py-2 rounded hover:bg-orange-700 transition"><i class="fas fa-comment-dots mr-2"></i>Iniciar</button>
+                        </div>
+                        <!-- Preguntas Frecuentes -->
+                        <div class="p-5 bg-gradient-to-r from-yellow-50 to-white rounded-lg shadow-md h-full animate__animated animate__fadeIn animate__delay-0.4s">
+                            <h3 class="text-xl font-semibold text-yellow-700 mb-4 flex items-center"><i class="fas fa-question-circle mr-2"></i>Preguntas Frecuentes</h3>
+                            <details class="bg-white p-2 rounded-lg shadow-md mb-2">
+                                <summary class="font-semibold text-yellow-700">¿Cómo reservo?</summary>
+                                <p class="mt-2 text-gray-700">Ve a Reservar Cita y selecciona especialidad.</p>
+                            </details>
+                            <details class="bg-white p-2 rounded-lg shadow-md">
+                                <summary class="font-semibold text-yellow-700">¿Qué hago en emergencia?</summary>
+                                <p class="mt-2 text-gray-700">Llama al 113 o visita un centro cercano.</p>
+                            </details>
+                        </div>
+                        <!-- Solicitar Callback -->
+                        <div class="p-5 bg-gradient-to-r from-green-50 to-white rounded-lg shadow-md h-full animate__animated animate__fadeIn animate__delay-0.6s">
+                            <h3 class="text-xl font-semibold text-green-700 mb-4 flex items-center"><i class="fas fa-phone-volume mr-2"></i>Solicitar Callback</h3>
+                            <input type="tel" id="callback-phone" placeholder="Teléfono" class="w-full p-2 border border-gray-300 rounded mb-4">
+                            <button id="request-callback" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"><i class="fas fa-phone mr-2"></i>Solicitar</button>
+                        </div>
+                        <!-- Estado de Tickets -->
+                        <div class="p-5 bg-gradient-to-r from-blue-50 to-white rounded-lg shadow-md h-full animate__animated animate__fadeIn animate__delay-0.8s col-span-2">
+                            <h3 class="text-xl font-semibold text-blue-700 mb-4 flex items-center"><i class="fas fa-ticket-alt mr-2"></i>Estado de Tickets</h3>
+                            <p class="text-gray-700">Ticket #123 - Abierto</p>
+                            <button id="view-tickets" class="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"><i class="fas fa-eye mr-2"></i>Ver Tickets</button>
+                        </div>
+                    </div>
+                    <!-- Modal Chat -->
+                    <div id="chat-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+                        <div class="bg-white p-6 rounded-lg shadow-2xl animate__animated animate__fadeIn">
+                            <h3 class="text-xl font-bold text-orange-800 mb-4">Chat en Vivo</h3>
+                            <div class="bg-gray-200 h-32 rounded mb-4">Placeholder Chat</div>
+                            <input type="text" id="chat-message" placeholder="Escribe mensaje" class="w-full p-2 border border-gray-300 rounded mb-4">
+                            <button id="send-chat" class="bg-orange-600 text-white px-4 py-2 rounded hover:bg-orange-700 transition">Enviar</button>
+                            <button id="close-chat" class="mt-2 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition">Cerrar</button>
+                        </div>
+                    </div>
+                    <!-- Modal Callback -->
+                    <div id="callback-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+                        <div class="bg-white p-6 rounded-lg shadow-2xl animate__animated animate__fadeIn">
+                            <h3 class="text-xl font-bold text-green-800 mb-4">Solicitar Callback</h3>
+                            <input type="tel" id="callback-number" placeholder="Teléfono" class="w-full p-2 border border-gray-300 rounded mb-4">
+                            <input type="time" id="callback-time" class="w-full p-2 border border-gray-300 rounded mb-4">
+                            <button id="confirm-callback" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition">Confirmar</button>
+                            <button id="cancel-callback" class="mt-2 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition">Cancelar</button>
+                        </div>
+                    </div>
+                    <!-- Modal Tickets -->
+                    <div id="tickets-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+                        <div class="bg-white p-6 rounded-lg shadow-2xl animate__animated animate__fadeIn">
+                            <h3 class="text-xl font-bold text-blue-800 mb-4">Estado de Tickets</h3>
+                            <p class="text-gray-700">Ticket #123 - Abierto - 2025-07-15</p>
+                            <button id="close-tickets" class="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Toast Notifications -->
+    <div id="toast" class="fixed top-6 right-6 p-4 rounded-lg shadow-lg hidden animate__animated animate__fadeInDown animate__delay-0.4s">
+        <p id="toast-message"></p>
+    </div>
+    <script src="js/sidebar.js"></script>
+    <script src="js/toask1.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js'></script>
+    <!-- Start of ChatBot (www.chatbot.com) code -->
+    <script>
+        window.__ow = window.__ow || {};
+        window.__ow.organizationId = "1f645d8f-427a-4708-ab6d-f040fd6bc89c";
+        window.__ow.template_id = "987e110c-2f03-4c7a-8b5f-3a1c50ae4671";
+        window.__ow.integration_name = "manual_settings";
+        window.__ow.product_name = "chatbot";   
+        ;(function(n,t,c){function i(n){return e._h?e._h.apply(null,n):e._q.push(n)}var e={_q:[],_h:null,_v:"2.0",on:function(){i(["on",c.call(arguments)])},once:function(){i(["once",c.call(arguments)])},off:function(){i(["off",c.call(arguments)])},get:function(){if(!e._h)throw new Error("[OpenWidget] You can't use getters before load.");return i(["get",c.call(arguments)])},call:function(){i(["call",c.call(arguments)])},init:function(){var n=t.createElement("script");n.async=!0,n.type="text/javascript",n.src="https://cdn.openwidget.com/openwidget.js",t.head.appendChild(n)}};!n.__ow.asyncInit&&e.init(),n.OpenWidget=n.OpenWidget||e}(window,document,[].slice))
+    </script>
+    <noscript>You need to <a href="https://www.chatbot.com/help/chat-widget/enable-javascript-in-your-browser/" rel="noopener nofollow">enable JavaScript</a> in order to use the AI chatbot tool powered by <a href="https://www.chatbot.com/" rel="noopener nofollow" target="_blank">ChatBot</a></noscript>
+    <!-- End of ChatBot code -->
+</body>
+</html>
