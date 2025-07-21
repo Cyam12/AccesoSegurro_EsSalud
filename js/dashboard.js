@@ -522,41 +522,5 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => toast.classList.add('hidden'), 3000);
     }
 
-    // Obtener todos los botones del sidebar
-    const buttons = document.querySelectorAll('aside button');
     
-    // Función para determinar la sección activa (puedes personalizar esta lógica)
-    const currentSection = window.location.pathname; // Ejemplo: Usa la URL para identificar la sección
-    
-    // Mapear las URLs a los IDs de los botones (personaliza según tus rutas)
-    const sectionMap = {
-        '/panel-principal': 'panel-principal',
-        '/mis-citas': 'mis-citas',
-        '/reservar-cita': 'reservar-cita',
-        '/resultados-medicos': 'resultados-medicos',
-        '/centros-salud': 'centros-salud',
-        '/historial': 'historial',
-        '/soporte': 'soporte',
-        '/logout': 'logout'
-    };
-
-    // Remover la clase active de todos los botones
-    buttons.forEach(button => button.classList.remove('active'));
-
-    // Asignar la clase active al botón correspondiente
-    const activeButtonId = sectionMap[currentSection] || 'panel-principal'; // Por defecto, 'panel-principal'
-    const activeButton = document.getElementById(activeButtonId);
-    if (activeButton) {
-        activeButton.classList.add('active');
-    }
-
-    // Añadir evento de clic para cambiar la clase active
-    buttons.forEach(button => {
-        button.addEventListener('click', () => {
-            // Remover la clase active de todos los botones
-            buttons.forEach(btn => btn.classList.remove('active'));
-            // Añadir la clase active al botón clicado
-            button.classList.add('active');
-        });
-    });
 });
