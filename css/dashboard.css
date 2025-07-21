@@ -42,6 +42,14 @@ aside button:hover {
     transition: all 0.3s ease;
 }
 
+aside button.active {
+    background-color: #3b82f6; /* Color más claro para resaltar */
+    color: white;
+    font-weight: bold;
+    transform: translateX(5px); /* Mantiene el desplazamiento del hover */
+    transition: all 0.3s ease;
+}
+
 main {
     margin-left: 16rem;
     flex: 1;
@@ -180,3 +188,4 @@ details[open] p {
         padding: 0.75rem;
     }
 }
+
