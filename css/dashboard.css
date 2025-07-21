@@ -27,6 +27,7 @@ aside {
     box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
     z-index: 60;
     animation-duration: 0.5s;
+    overflow-y: auto; /* Evita desbordamiento vertical */
 }
 
 aside button {
@@ -43,10 +44,22 @@ aside button:hover {
 }
 
 aside button.active {
-    background-color: #3b82f6; /* Color más claro para resaltar */
+    background-color: #60a5fa;
     color: white;
     font-weight: bold;
-    transform: translateX(5px); /* Mantiene el desplazamiento del hover */
+    transform: translateX(5px);
+    transition: all 0.3s ease;
+}
+
+aside button#panel-principal.active {
+    background-color: #3b82f6;
+}
+
+aside button#logout.active {
+    background-color: #ef4444;
+    color: white;
+    font-weight: bold;
+    transform: translateX(5px);
     transition: all 0.3s ease;
 }
 
